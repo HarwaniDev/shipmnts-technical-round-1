@@ -84,7 +84,7 @@ planRouter.get("/:plan_id", async (req, res) => {
                     "name": item.name,
                     "half_price": item.half,
                     "full_price": item.footlong,
-                    "extra_charge": item.extra
+                    "extra_charge": item.extra ?? 0
             }))
             return response;
         })
