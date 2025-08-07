@@ -14,3 +14,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Store {
+  id             Int      @id @default(autoincrement())
+  store_location String   @unique
+  currency       String
+  tax_percentage Int
+  premium_items  String[]
+  plans   Plan[]
+}
+
+model Plan {
+  id Int @id @default(autoincrement())
+  valid_from    DateTime
+  valid_to    DateTime
+  store_id    Int
+  store   Store   @relation(fields: [store_id], references: [id])
+  categories Category[]
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  plan_id  Int
+  plan      Plan  @relation(fields: [plan_id], references: [id])
+  items   Item[]
+}
+
+model Item {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  half      Int
+  footlong  Int
+  extra       Int
+  category_id  Int
+  category    Category  @relation(fields: [category_id], references: [id])
+}
